@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getCurrentUser } from '@/lib/auth';
-import { User } from '@/lib/types';
+import { User } from '@/lib/auth';
 import Cookies from 'js-cookie';
 
 interface AuthContextType {
@@ -12,6 +12,7 @@ interface AuthContextType {
   isLoading: boolean;
   authLogin: (token: string) => Promise<void>;
   authLogout: () => void;
+  authLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setToken(storedToken);
         Cookies.set('token', storedToken, { expires: 1 }); // Ensure cookie is set
         try {
-          const userData = await getCurrentUser(storedToken);
+          const userData = await getCurrentUser();
           setUser(userData);
         } catch (error) {
           console.error('Failed to get user:', error);
@@ -50,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       localStorage.setItem('token', newToken);
       setToken(newToken);
-      const userData = await getCurrentUser(newToken);
+      const userData = await getCurrentUser();
       setUser(userData);
     } catch (error) {
       console.error('Error setting up auth:', error);
@@ -76,6 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         authLogin,
         authLogout,
+        authLoading: isLoading,
       }}
     >
       {children}

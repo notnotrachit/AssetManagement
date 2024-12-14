@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { login } from "@/lib/auth";
@@ -12,8 +11,6 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { authLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,10 +26,9 @@ export default function LoginPage() {
       Cookies.set("refreshToken", response.refresh, { expires: 7 }); // 7 days
       await authLogin(response.access);
 
-      const from = searchParams.get("from") || "/";
-      router.push(from);
     } catch (error) {
       setError("Invalid username or password");
+      console.error("Failed to login:", error);
     }
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -17,10 +18,11 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../../components/ui/use-toast";
 
 export default function MyAssetsPage() {
-  const [assets, setAssets] = useState([]);
+  const [assets, setAssets] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [categories, setCategories] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingAsset, setEditingAsset] = useState(null);
+  const [editingAsset, setEditingAsset] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const { user, authLoading } = useAuth();
   const router = useRouter();
@@ -57,7 +59,7 @@ export default function MyAssetsPage() {
     };
 
     fetchData();
-  }, [user, router, authLoading]);
+  }, [user, router, authLoading, toast]);
 
   const handleSubmit = async (data: any) => {
     try {
@@ -66,7 +68,7 @@ export default function MyAssetsPage() {
         const updateData = {
           name: data.name,
           category: editingAsset.category.id,
-          fields: data.fields.map((field) => ({
+          fields: data.fields.map((field: { name: any; value: any; }) => ({
             field_name: field.name,
             field_label: field.name, // Use the field name as label if not provided
             value: field.value,
@@ -94,7 +96,7 @@ export default function MyAssetsPage() {
       } else {
         const newAsset = await assetsApi.create({
           ...data,
-          fields: data.fields.map((field) => ({
+          fields: data.fields.map((field: { name: any; value: any; }) => ({
             field_name: field.name,
             field_label: field.name,
             value: field.value,

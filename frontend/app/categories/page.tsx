@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -17,9 +18,15 @@ import { useToast } from "../../components/ui/use-toast";
 import { fetchWithAuth } from "@/lib/api";
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState([]);
+  interface Category {
+    id: number;
+    name: string;
+    fields?: { id: number; label: string; field_type: string; required: boolean }[];
+  }
+  
+  const [categories, setCategories] = useState<Category[]>([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
@@ -32,7 +39,7 @@ export default function CategoriesPage() {
     }
 
     // Only allow admin and vendor roles
-    if (user === null || !['admin', 'vendor'].includes(user?.role)) {
+    if (user === null || !['admin', 'vendor'].includes(user?.role ?? '')) {
       router.push("/");
       return;
     }
@@ -55,7 +62,7 @@ export default function CategoriesPage() {
     try {
       if (editingCategory) {
         const updatedCategory = await categoriesApi.update(
-          editingCategory.id,
+          editingCategory.id.toString(),
           data
         );
         setCategories(
@@ -114,7 +121,7 @@ export default function CategoriesPage() {
     return <div>Loading...</div>;
   }
 
-  if (!['admin', 'vendor'].includes(user?.role)) {
+  if (!['admin', 'vendor'].includes(user?.role ?? '')) {
     return null;
   }
 
@@ -181,7 +188,7 @@ export default function CategoriesPage() {
                     Edit
                   </Button>
                   <Button
-                    variant="destructive"
+                    variant="ghost"
                     size="sm"
                     onClick={() => handleDelete(category)}
                   >

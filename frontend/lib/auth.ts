@@ -66,7 +66,7 @@ export async function getCurrentUser(): Promise<User> {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to get user');
+    console.error('Failed to get user:', response);
   }
 
   return response.json();

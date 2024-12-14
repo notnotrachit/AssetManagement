@@ -64,3 +64,5 @@ export function useCategories() {
 
   return { categories, isLoading, error };
 }
+
+export type { Category };

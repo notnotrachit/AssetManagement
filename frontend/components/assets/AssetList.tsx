@@ -3,13 +3,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
 
-interface FormField {
-  id: string;
-  label: string;
-  name: string;
-  value: string;
-}
-
 interface Asset {
   id: string;
   name: string;

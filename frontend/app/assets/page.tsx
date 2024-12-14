@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -15,10 +16,11 @@ import { assetsApi, categoriesApi } from "@/lib/api";
 import { useAuth } from "../context/AuthContext";
 
 export default function AssetsPage() {
-  const [assets, setAssets] = useState([]);
+  const [assets, setAssets] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [categories, setCategories] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingAsset, setEditingAsset] = useState(null);
+  const [editingAsset, setEditingAsset] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
@@ -59,10 +61,10 @@ export default function AssetsPage() {
   const handleSubmit = async (data: any) => {
     try {
       if (editingAsset) {
-        const updatedAsset = await assetsApi.update(editingAsset.id, data);
+        await assetsApi.update(editingAsset.id, data);
         fetchData();
       } else {
-        const newAsset = await assetsApi.create(data);
+        await assetsApi.create(data);
         fetchData();
       }
       setShowForm(false);

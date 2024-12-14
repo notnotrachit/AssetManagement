@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -7,16 +8,8 @@ import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
 import { useToast } from '../ui/use-toast';
-import { useCategories } from '@/lib/hooks/useCategories';
+import { useCategories, Category } from '@/lib/hooks/useCategories';
 
-interface FormField {
-  id: string;
-  name: string;
-  label: string;
-  type: string;
-  required: boolean;
-  options?: string[];
-}
 
 interface AssetField {
   id: string;

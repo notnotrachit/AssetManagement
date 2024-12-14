@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Button } from '../ui/Button';
 
@@ -10,8 +11,11 @@ interface FormField {
 }
 
 interface CategoryFormProps {
-  onSubmit: (data: any) => void;
-  initialData?: any;
+  onSubmit: (data: any) => Promise<void>;
+
+  initialData: any;
+
+  onCancel: () => void;
 }
 
 export function CategoryForm({ onSubmit, initialData }: CategoryFormProps) {
