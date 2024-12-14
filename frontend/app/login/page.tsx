@@ -25,6 +25,7 @@ export default function LoginPage() {
       Cookies.set("token", response.access, { expires: 1 }); // 1 day
       Cookies.set("refreshToken", response.refresh, { expires: 7 }); // 7 days
       await authLogin(response.access);
+      window.location.href = "/";
 
     } catch (error) {
       setError("Invalid username or password");
