@@ -6,6 +6,7 @@ import { Input } from "../../components/ui/Input";
 import { login } from "@/lib/auth";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -34,18 +35,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8 rounded-lg border p-6 shadow-lg">
+    <div className="flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="text-center text-2xl font-bold">
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight">
             Sign in to your account
           </h2>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4 rounded-md shadow-sm">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium">
+              <label htmlFor="username" className="sr-only">
                 Username
               </label>
               <Input
@@ -55,12 +55,12 @@ export default function LoginPage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="mt-1"
+                placeholder="Username"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium">
+              <label htmlFor="password" className="sr-only">
                 Password
               </label>
               <Input
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1"
+                placeholder="Password"
               />
             </div>
           </div>
@@ -79,10 +79,19 @@ export default function LoginPage() {
             <div className="text-center text-sm text-red-600">{error}</div>
           )}
 
-          <Button type="submit" className="w-full btn btn-success">
-            Sign in
-          </Button>
+          <div>
+            <Button type="submit" className="w-full">
+              Sign in
+            </Button>
+          </div>
         </form>
+
+        <div className="text-center text-sm">
+          Don't have an account?{" "}
+          <Link href="/register" className="font-medium text-primary hover:text-primary/80">
+            Sign up
+          </Link>
+        </div>
       </div>
     </div>
   );
