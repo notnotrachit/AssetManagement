@@ -74,7 +74,7 @@ export default function Home() {
           </motion.div>
         )}
 
-        <motion.div variants={item}>
+        <motion.div variants={item} className="">
           <div className="card bg-base-200 hover:bg-base-300 transition-colors duration-300 shadow-lg">
             <div className="card-body">
               <div className="flex items-center gap-4">

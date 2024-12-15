@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en">
       <body
         className={`${geist.className} min-h-screen bg-gradient-to-br from-base-100 to-base-200`}
       >

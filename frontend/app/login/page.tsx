@@ -79,7 +79,7 @@ export default function LoginPage() {
             <div className="text-center text-sm text-red-600">{error}</div>
           )}
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full btn btn-success">
             Sign in
           </Button>
         </form>
