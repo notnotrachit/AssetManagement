@@ -140,7 +140,7 @@ export function AssetForm({ asset, onSubmit, onCancel }: AssetFormProps) {
             <Select
               value={formData.category}
               onValueChange={handleCategoryChange}
-              disabled={!!asset} // Disable category change when editing
+              disabled={!!asset} 
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select category" />

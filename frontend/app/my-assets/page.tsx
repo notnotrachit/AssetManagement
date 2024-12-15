@@ -158,14 +158,6 @@ export default function MyAssetsPage() {
 
       {showForm && (
         <Card>
-          <CardHeader>
-            <CardTitle>
-              {editingAsset ? "Edit Asset" : "Create New Asset"}
-            </CardTitle>
-            <CardDescription>
-              Select a category and fill in the required information
-            </CardDescription>
-          </CardHeader>
           <CardContent>
             <AssetForm
               asset={editingAsset}

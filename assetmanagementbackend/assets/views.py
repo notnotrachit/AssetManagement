@@ -29,7 +29,7 @@ class AssetViewSet(viewsets.ModelViewSet):
             if user.role == 'vendor':
                 queryset = queryset.filter(vendor=user)
             else:
-                return Asset.objects.none()
+                return Asset.objects.all()
         
         # Filter by category if specified
         category = self.request.query_params.get('category', None)
