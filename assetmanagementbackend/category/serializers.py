@@ -30,17 +30,31 @@ class CategoryCreateSerializer(serializers.ModelSerializer):
         return category
 
     def update(self, instance, validated_data):
+        
         fields_data = validated_data.pop('fields', [])
         
         # Update category name
         instance.name = validated_data.get('name', instance.name)
         instance.save()
 
-        # Delete existing fields
-        instance.fields.all().delete()
+        existing_fields = instance.fields.all()
+
 
         # Create new fields
         for field_data in fields_data:
-            FormField.objects.create(category=instance, **field_data)
+            if instance.fields.filter(name=field_data.get('name')).exists():
+                field = instance.fields.get(name=field_data.get('name'))
+                field.name = field_data.get('name', field.name)
+                field.label = field_data.get('label', field.label)
+                field.field_type = field_data.get('field_type', field.field_type)
+                field.required = field_data.get('required', field.required)
+                field.order = field_data.get('order', field.order)
+                field.save()
+            else:
+                FormField.objects.create(category=instance, **field_data)
+        
+        for field in existing_fields:
+            if not any(field_data.get('name') == field.name for field_data in fields_data):
+                field.delete()
 
         return instance
